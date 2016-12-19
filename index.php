@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -8,16 +9,22 @@
         }
         .flex-container {
             display: flex;
-             display: -webkit-flex;
-            width: 400px;
-            height: 250px;
+            display: -webkit-flex;
             background-color: white;
+            width:20em;
             border: 1px solid black;
             margin: 0 auto;
             flex-direction: column;
+            -webkit-flex-direction: column;
+            padding: 1%;
         }
         .center {
             text-align: center;
+            -webkit-text-align: center;
+        }
+        .new-area {
+            color:royalblue;
+            border: 1px solid royalblue;
         }
     </style>
 </head>
@@ -29,20 +36,20 @@
         {
             $tip = (float)$_GET["subtotal"] * (float)$_GET['tip'];
             $total = $tip + (float)$_GET["subtotal"];
-        } else if(isset($_GET['subtotal']) && ((float)$_GET['subtotal']) == 0)
+        } else if(isset($_GET['subtotal']) && ((float)$_GET['subtotal']) <= 0)
         {
             $error = true;
         }
     ?>
     <form action="index.php" method="GET">
-        <span <?php if(isset($error) && $error) echo 'style="color:red;"'?>>Bill subtotal: $</span>
+        <span <?php if(isset($error) && $error) echo 'style="color:red; font-weight:bold;"'?>>Bill subtotal: $</span>
         <input type="text" name="subtotal" value="<?php if(isset($_GET['subtotal'])) echo $_GET['subtotal']?>"><br>
         Tip percentage:
-        <?php 
+        <?php
             if(isset($_GET['tip']))
                 $radioInput = (float)$_GET['tip'];
             else
-                $radioInput = .10;
+                $radioInput = .15;
             $numArr = array(".10", ".15", ".20");
             for($i = 0; $i < 3; $i++)
             {
@@ -53,17 +60,15 @@
                     echo '<input type="radio" name="tip" value="'. $numArr[$i] .
                     '">' . $numArr[$i] . '%';
             }
-        ?>
-        <!--<input type="radio" name="tip" value=".10" checked> 10%
-        <input type="radio" name="tip" value=".15"> 15%
-        <input type="radio" name="tip" value=".20"> 20%--> <br>
-        <input type="submit" value="Submit" style="margin: 0 auto">
+        ?> <br>
+        <input type="submit" value="Submit" style="display:block; margin: 0 auto;"><br/>
     </form>
     <?php
         if(isset($tip) && isset($total) && is_float($tip) && is_float($total))
-        { 
-            echo "Tip: $" . number_format($tip, 2). "<br>";
-            echo "Total: $" . number_format($total, 2). " <br>";
+        {
+
+            echo '<div class="new-area">Tip: $' . number_format($tip, 2). "<br>";
+            echo "Total: $" . number_format($total, 2). "</div> <br>";
         }
     ?>
     </div>
